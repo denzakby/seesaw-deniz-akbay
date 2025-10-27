@@ -1,0 +1,42 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, sans-serif; background: #f3f3f3; color: #222; }
+header, .durum { padding: 16px; text-align: center; }
+h1 { margin: 0; font-size: 20px; }
+
+.alan {
+  min-height: 70vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.sarmal {
+  display: grid;
+  place-items: center;
+  gap: 18px;
+}
+
+.tahta {
+  width: clamp(360px, 70vw, 800px);
+  height: 14px;
+  background: #caa66a;
+  border-radius: 7px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.18);
+  position: relative;
+  transform-origin: center;
+  cursor: pointer;
+}
+
+.dayanak {
+  width: 0;
+  height: 0;
+  border-left: 28px solid transparent;
+  border-right: 28px solid transparent;
+  border-top: 42px solid #444;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.25));
+}
+
+.durum {
+  font-size: 14px;
+  color: #555;
+}
