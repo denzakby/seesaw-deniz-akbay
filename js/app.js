@@ -2,11 +2,14 @@ const tahta = document.getElementById("tahta")
 const bilgi = document.getElementById("bilgi")
 const solEtiket = document.getElementById("solToplam")
 const sagEtiket = document.getElementById("sagToplam")
+const sifirlaBtn = document.getElementById("sifirla")
+const durBtn = document.getElementById("dur")
 
 const ogeler = []
 let aci = 0
 let hedefAci = 0
 let hiz = 0
+let durakla = false
 
 const yay = 5
 const sonum = 3
@@ -98,6 +101,7 @@ function yukle() {
 }
 
 tahta.addEventListener("click", function (e) {
+  if (durakla) { bilgi.textContent = "Duraklatıldı"; return }
   const k = tahta.getBoundingClientRect()
   const merkez = k.left + k.width / 2
   const x = e.clientX - merkez
@@ -115,18 +119,40 @@ tahta.addEventListener("click", function (e) {
   kaydet()
 })
 
+if (sifirlaBtn) {
+  sifirlaBtn.addEventListener("click", function () {
+    const kutular = tahta.querySelectorAll(".kutu")
+    kutular.forEach(el => el.remove())
+    ogeler.length = 0
+    hedefAci = 0
+    bilgi.textContent = "Hazır"
+    guncelleKiloYazilari()
+    try { localStorage.removeItem(anahtar) } catch (_) {}
+  })
+}
+
+if (durBtn) {
+  durBtn.addEventListener("click", function () {
+    durakla = !durakla
+    durBtn.textContent = durakla ? "Devam" : "Durdur"
+    if (!durakla) bilgi.textContent = "Hazır"
+  })
+}
+
 let once = performance.now()
 function dongu(ts) {
   const dtHam = (ts - once) / 1000
   once = ts
   const dt = Math.min(Math.max(dtHam, 0), 0.033)
-  const hata = hedefAci - aci
-  hiz += yay * hata * dt
-  hiz *= Math.exp(-sonum * dt)
-  if (hiz > hizSiniri) hiz = hizSiniri
-  if (hiz < -hizSiniri) hiz = -hizSiniri
-  aci += hiz * dt
-  tahta.style.transform = "rotate(" + aci + "deg)"
+  if (!durakla) {
+    const hata = hedefAci - aci
+    hiz += yay * hata * dt
+    hiz *= Math.exp(-sonum * dt)
+    if (hiz > hizSiniri) hiz = hizSiniri
+    if (hiz < -hizSiniri) hiz = -hizSiniri
+    aci += hiz * dt
+    tahta.style.transform = "rotate(" + aci + "deg)"
+  }
   requestAnimationFrame(dongu)
 }
 

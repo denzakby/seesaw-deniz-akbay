@@ -32,11 +32,50 @@ h1 { margin: 0; font-size: 20px; }
   height: 0;
   border-left: 28px solid transparent;
   border-right: 28px solid transparent;
-  border-top: 42px solid #444;
+  border-bottom: 42px solid #444;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,.25));
 }
+
 
 .durum {
   font-size: 14px;
   color: #555;
 }
+
+.kutu {
+  position: absolute;
+  bottom: 100%;
+  width: 40px;
+  height: 26px;
+  background: #fff8d6;
+  border: 1px solid #d5c58a;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  user-select: none;
+  transform: translateX(-50%);
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
+}
+
+#sifirla {
+  padding: 6px 12px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+}
+#sifirla:hover { background: #f2f2f2; }
+
+#dur {
+  padding: 6px 12px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+}
+#dur:hover { background: #f2f2f2; }
+
+
