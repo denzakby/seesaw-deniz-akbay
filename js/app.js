@@ -12,6 +12,7 @@ const yay = 5
 const sonum = 3
 const hizSiniri = 90
 const merkezYakin = 4
+const anahtar = "seesaw"
 
 function yuvarla(sayi, basamak) {
   const c = Math.pow(10, basamak)
@@ -58,6 +59,44 @@ function guncelleHedefAciTorkla() {
   hedefAci = ham
 }
 
+function kutuEkle(xBoard, kg) {
+  const d = document.createElement("div")
+  d.className = "kutu"
+  d.textContent = kg + " kg"
+  d.style.left = xBoard + "px"
+  tahta.appendChild(d)
+}
+
+function cizOgeler() {
+  const eskiler = tahta.querySelectorAll(".kutu")
+  eskiler.forEach(el => el.remove())
+  const r = tahta.getBoundingClientRect()
+  for (const o of ogeler) {
+    const xBoard = o.x + r.width / 2
+    kutuEkle(xBoard, o.kg)
+  }
+}
+
+function kaydet() {
+  try { localStorage.setItem(anahtar, JSON.stringify({ ogeler })) } catch (_) {}
+}
+
+function yukle() {
+  try {
+    const s = localStorage.getItem(anahtar)
+    if (!s) return
+    const veri = JSON.parse(s)
+    if (!veri || !Array.isArray(veri.ogeler)) return
+    ogeler.length = 0
+    for (const o of veri.ogeler) {
+      if (typeof o.x === "number" && typeof o.kg === "number") ogeler.push({ x: o.x, kg: o.kg })
+    }
+    cizOgeler()
+    guncelleKiloYazilari()
+    guncelleHedefAciTorkla()
+  } catch (_) {}
+}
+
 tahta.addEventListener("click", function (e) {
   const k = tahta.getBoundingClientRect()
   const merkez = k.left + k.width / 2
@@ -67,18 +106,13 @@ tahta.addEventListener("click", function (e) {
     return
   }
   bilgi.textContent = "Konum X: " + yuvarla(x, 1) + " px"
-
   const kg = rastgeleKg()
   const sol = e.clientX - k.left
-  const d = document.createElement("div")
-  d.className = "kutu"
-  d.textContent = kg + " kg"
-  d.style.left = sol + "px"
-  tahta.appendChild(d)
-
+  kutuEkle(sol, kg)
   ogeler.push({ x, kg })
   guncelleKiloYazilari()
   guncelleHedefAciTorkla()
+  kaydet()
 })
 
 let once = performance.now()
@@ -96,6 +130,9 @@ function dongu(ts) {
   requestAnimationFrame(dongu)
 }
 
-guncelleKiloYazilari()
-guncelleHedefAciTorkla()
+window.addEventListener("resize", function () {
+  cizOgeler()
+})
+
+yukle()
 requestAnimationFrame(dongu)
