@@ -2,6 +2,8 @@ Tahterevalli Simülasyonu
 
 Bu küçük çalışmada, tahtaya tıkladıkça 1–10 kg arası rastgele ağırlıklar ekleniyor. Ağırlıkların konumu ve toplamları dikkate alınarak tork farkına göre (kg × uzaklık) tahterevalli ±30° sınırında yumuşak bir şekilde eğiliyor. Son durum tarayıcıda saklanır; sayfa yenilense bile kaldığı yerden devam eder.
 
+## Github Pages
+https://denzakby.github.io/seesaw-deniz-akbay/
 
 ## Nasıl Çalıştırılır
 - Depoyu bilgisayara alın ya da zip indirip açın.
